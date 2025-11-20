@@ -1,0 +1,46 @@
+# === Go build ===
+/bin/
+/build/
+/dist/
+/out/
+/tmp/
+/*.exe
+/*.exe~
+/*.dll
+/*.so
+/*.dylib
+
+# === Go modules cache ===
+/vendor/
+
+# === OS / Editor files ===
+.DS_Store
+Thumbs.db
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Logs ===
+*.log
+
+# === Environment / Credentials ===
+.env
+.env.*
+*.key
+*.pem
+*.crt
+
+# === Gin / GORM temporary files ===
+debug
+debug.test
+
+# === Cache ===
+/cache/
+/**/__pycache__/
+
+# === Generated files ===
+*.out
+coverage.txt
