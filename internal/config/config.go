@@ -12,7 +12,8 @@ type Config struct {
 	ServerPort  string
 	Environment string
 
-	Database DatabaseConfig
+	Database   DatabaseConfig
+	Cloudflare CloudflareConfig
 }
 
 type DatabaseConfig struct {
@@ -21,6 +22,14 @@ type DatabaseConfig struct {
 	User     string
 	Password string
 	Name     string
+}
+
+type CloudflareConfig struct {
+	AccountID       string
+	AccessKeyID     string
+	SecretAccessKey string
+	Bucket          string
+	PublicURL       string 
 }
 
 func LoadConfig() *Config {
@@ -37,6 +46,13 @@ func LoadConfig() *Config {
 			User:     getEnv("DB_USER", "root"),
 			Password: getEnv("DB_PASSWORD", ""),
 			Name:     getEnv("DB_NAME", "tikitiki"),
+		},
+		Cloudflare: CloudflareConfig{
+			AccountID:       getEnv("CF_ACCOUNT_ID", ""),
+			AccessKeyID:     getEnv("CF_ACCESS_KEY_ID", ""),
+			SecretAccessKey: getEnv("CF_SECRET_ACCESS_KEY", ""),
+			Bucket:          getEnv("CF_BUCKET", ""),
+			PublicURL:       getEnv("CF_PUBLIC_URL", ""),
 		},
 	}
 }

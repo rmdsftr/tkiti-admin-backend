@@ -34,6 +34,7 @@ func Migrate(db *gorm.DB) error {
 		&models.Tags{},
 		&models.Article{},
 		&models.ArticleTag{},
+		&models.Kegiatan{},
 	)
 
 	if err != nil {

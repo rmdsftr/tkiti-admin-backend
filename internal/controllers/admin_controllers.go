@@ -19,17 +19,30 @@ func NewAdminController(db *gorm.DB) *AdminController {
 }
 
 func (ac *AdminController) GetAllAdmin(c *gin.Context) {
-	var admins []models.Admin
-	if err := ac.DB.Find(&admins).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+	type AdminWithCount struct {
+		Nim        string `json:"nim"`
+		Nama       string `json:"nama"`
+		Role       string `json:"role"`
+		Status     string `json:"status"`
+		JmlArtikel int64  `json:"jumlah_artikel"`
+	}
+
+	var result []AdminWithCount
+
+	err := ac.DB.Table("admin").
+		Select("admin.nim, admin.nama, admin.role, admin.status, COUNT(article.article_id) AS jml_artikel").
+		Joins("LEFT JOIN article ON article.nim = admin.nim").
+		Group("admin.nim, admin.nama, admin.role, admin.status").
+		Scan(&result).Error
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Berhasil mengambil semua data admin",
-		"data":    admins,
+		"data":    result,
 	})
 }
 
