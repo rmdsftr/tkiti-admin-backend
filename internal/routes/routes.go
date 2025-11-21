@@ -8,10 +8,12 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
-	users := r.Group("/users")
+	admin := r.Group("/admin")
 	{
-		userController := controllers.NewUserController(db)
-		users.GET("/", userController.GetAllUsers)
-		users.POST("/", userController.CreateUsers)
+		adminController := controllers.NewAdminController(db)
+		admin.GET("/", adminController.GetAllAdmin)
+		admin.POST("/", adminController.CreateAdmin)
+		admin.PATCH("/:nim/:roleorstatus", adminController.UpdateRoleOrStatus)
+		admin.DELETE("/:nim", adminController.DeleteAccount)
 	}
 }
