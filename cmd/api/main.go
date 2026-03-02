@@ -62,7 +62,7 @@ func (app *App) initStorageService() {
 func (app *App) initRouter() {
 	r := gin.Default()
 	r.Use(middleware.CORS())
-	routes.SetupRoutes(r, app.DB, app.StorageService)
+	routes.SetupRoutes(r, app.DB, app.StorageService, app.Config)
 	app.Router = r
 }
 
